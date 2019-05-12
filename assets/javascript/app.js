@@ -43,20 +43,21 @@ $(document).ready(function(){
             // if the answer is the correct answer, add a class to track it
             if (answers == correctIndex){
                 newAnswer.addClass("correct");
+            } else {
+                newAnswer.addClass("incorrect");
             }
-
-            newAnswer.on("click", function(){
-                // if correct...
-                // replace question with correct
-
-                // else if incorrect...
-                // replace question with incorrect.
-            })
 
             //append answer to list
             $("#answers").append(newAnswer);
         }
-        // 
+        // add on click functionality
+        $(".correct").on("click", function(){
+            alert("correct!");
+        })
+
+        $(".incorrect").on("click", function(){
+            alert("incorrect!");
+        })
     }
 
     function startGame(){
