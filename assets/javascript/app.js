@@ -25,7 +25,20 @@ $(document).ready(function(){
 
     questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
 
+    function docOnClick(){
+        $(document).on("click", function(){
+            postQuestion();
+        });
+    }
+
     function postQuestion(){
+        
+        //
+        $(document).off();
+
+        //empty answers
+        $("#answers").empty();
+
         // using the current question count as an index, create question
         $("#question").text(questions[questionCount].text);
 
@@ -35,7 +48,6 @@ $(document).ready(function(){
 
         // create answers in list
         for (answers in questions[questionCount].answers){
-            console.log("correct index is "+correctIndex+", current index is " +answers);
 
             var newAnswer = $("<li>").text(questions[questionCount].answers[answers]);
             newAnswer.addClass("answer");
@@ -50,14 +62,22 @@ $(document).ready(function(){
             //append answer to list
             $("#answers").append(newAnswer);
         }
+
         // add on click functionality
         $(".correct").on("click", function(){
-            alert("correct!");
+            $("#question").text("CORRECT! "+ questions[questionCount].answerText);
+            $(".answer").off();
+            setTimeout(docOnClick, 10);
+            questionCount ++;
         })
 
         $(".incorrect").on("click", function(){
-            alert("incorrect!");
+            $("#question").text("WRONG! "+ questions[questionCount].answerText);
+            $(".answer").off();
+            setTimeout(docOnClick, 10);
+            questionCount ++;
         })
+            
     }
 
     function startGame(){
