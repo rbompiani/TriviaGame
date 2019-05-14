@@ -11,12 +11,13 @@ $(document).ready(function(){
     var correctAnswers;
     var incorrectAnswers;
     var questions;
+    var speed;
 
     var q1 = new question("What was the name of the first Bond film?",["Dr. No", "Casino Royale", "On Her Majesty's Secret Service"], 0, "Dr. No, the first Bond film, was released in 1962");
     var q2 = new question("Which was the first Bond film to star Pierce Brosnan?", ["Tomorrow Never Dies", "Die Another Day", "Goldeneye"], 2, "Pierce Brosnan made his first appearance as 007 in 1995's Goldeneye");
     var q3 = new question("Which Bond film is set primarily in Japan?", ["Octopussy", "You Only Live Twice", "Die Another Day"], 1, "Most of the film You Only Live Twice was shot in Japan between 1966 & 1967");
     var q4 = new question("SPECTRE stands for Special Executive For Counter-Intelligence, Terrorism, Revenge and... what?", ["Extinction","Extortion","Examination"], 1, "SPECTRE stands for Special Executive For Counter-Intelligence, Terrorism, Revenge, and Extortion");
-    var q5 = new question("What does the “00” signify in 007?",["The rank of commander","A license to kill","A license to carry firearms"],1, "The 00 represents a license to kill. The 7 means Bond was the 7th agent to receive this title");
+    var q5 = new question("What does the 00 signify in 007?",["The rank of commander","A license to kill","A license to carry firearms"],1, "The 00 represents a license to kill. The 7 means Bond was the 7th agent to receive this title");
     var q6 = new  question("Who sang the title theme for Diamonds Are Forever?",["Rita Coolidge", "A-Ha", "Shirley Bassey"], 2, "Shirley Bassey sang the title song for 3 Bond films");
     var q7 = new question("What famous landmark does Grace Jones jump from in A View to a Kill?", ["Big Ben", "The Eiffel Tower", "The Empire State Building"], 1, "Grace Jones lept from the Eiffel Tower in the 1985 Bond film");
     var q8 = new question("Which of the following is NOT a James Bond Villain", ["Le Chiffre", "Erst Stavro Blofeld", "Richmond Valentine", "Auric Goldfinger"],2, "Richmond Valentine was the headlining villain from the Kingsmen francise");
@@ -25,16 +26,7 @@ $(document).ready(function(){
 
     questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
 
-    function docOnClick(){
-        $(document).on("click", function(){
-            postQuestion();
-        });
-    }
-
     function postQuestion(){
-        
-        //
-        $(document).off();
 
         //empty answers
         $("#answers").empty();
@@ -67,15 +59,17 @@ $(document).ready(function(){
         $(".correct").on("click", function(){
             $("#question").text("CORRECT! "+ questions[questionCount].answerText);
             $(".answer").off();
-            setTimeout(docOnClick, 10);
-            questionCount ++;
+            setTimeout(postQuestion, 5000);
+            correctAnswers++;
+            questionCount++;
         })
 
         $(".incorrect").on("click", function(){
             $("#question").text("WRONG! "+ questions[questionCount].answerText);
             $(".answer").off();
-            setTimeout(docOnClick, 10);
-            questionCount ++;
+            setTimeout(postQuestion, 5000);
+            incorrectAnswers++;
+            questionCount++;
         })
             
     }
@@ -85,7 +79,12 @@ $(document).ready(function(){
         questionCount=0;
         correctAnswers=0;
         incorrectAnswers=0;
-        postQuestion();
+
+        $("#question").html("You have ten minutes to diffuse the bomb above by snipping 5 of 10 wires.<br> Snip wires by correctly answering the following questions. <br> Incorrect answers will cause the bomb's timer to speed up. <br>GOOD LUCK!");
+        var startButton = $("<button>");
+        startButton.text("START");
+        startButton.on("click", postQuestion);
+        $("#answers").append(startButton);
     }
 
 
