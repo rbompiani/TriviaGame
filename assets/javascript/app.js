@@ -11,7 +11,9 @@ $(document).ready(function(){
     var correctAnswers;
     var incorrectAnswers;
     var questions;
+    var time;
     var speed;
+    var countSpeed;
 
     var q1 = new question("What was the name of the first Bond film?",["Dr. No", "Casino Royale", "On Her Majesty's Secret Service"], 0, "Dr. No, the first Bond film, was released in 1962");
     var q2 = new question("Which was the first Bond film to star Pierce Brosnan?", ["Tomorrow Never Dies", "Die Another Day", "Goldeneye"], 2, "Pierce Brosnan made his first appearance as 007 in 1995's Goldeneye");
@@ -62,6 +64,7 @@ $(document).ready(function(){
             setTimeout(postQuestion, 5000);
             correctAnswers++;
             questionCount++;
+            $("#snip").trigger("play");
         })
 
         $(".incorrect").on("click", function(){
@@ -70,20 +73,67 @@ $(document).ready(function(){
             setTimeout(postQuestion, 5000);
             incorrectAnswers++;
             questionCount++;
+            speed= speed*3/4;
+            $("#zap").trigger("play");
+            startTime();
         })
             
     }
+
+    function timeConverter(t) {
+
+        //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+        var minutes = Math.floor(t / 60);
+        var seconds = t - (minutes * 60);
+      
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+      
+        if (minutes === 0) {
+          minutes = "00";
+        }
+      
+        else if (minutes < 10) {
+          minutes = "0" + minutes;
+        }
+      
+        return minutes + ":" + seconds;
+    }
+
+    function startTime(){
+        clearInterval(countSpeed);
+        console.log(speed);
+        var mils = speed*1000;
+        countSpeed = setInterval(countDown, mils);
+    }
+
+    function countDown(){
+        time--;
+        var convTime = timeConverter(time);
+        $("#timer").text(convTime);
+        $("#beep").trigger("play");
+    };
 
     function startGame(){
         // initialize variables
         questionCount=0;
         correctAnswers=0;
         incorrectAnswers=0;
+        time = 180;
+        speed = 1;
 
-        $("#question").html("You have ten minutes to diffuse the bomb above by snipping 5 of 10 wires.<br> Snip wires by correctly answering the following questions. <br> Incorrect answers will cause the bomb's timer to speed up. <br>GOOD LUCK!");
+        $("#timer").html("3:00");
+
+        $("#question").html("You have three minutes to diffuse the bomb above by snipping 5 of 10 wires.<br> Snip wires by correctly answering the following questions. <br> Incorrect answers will cause the bomb's timer to speed up. <br>GOOD LUCK!");
+        
         var startButton = $("<button>");
         startButton.text("START");
-        startButton.on("click", postQuestion);
+        startButton.on("click", function(){
+            $("#die").trigger("play");
+            postQuestion();
+            startTime();
+        });
         $("#answers").append(startButton);
     }
 
