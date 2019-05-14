@@ -89,7 +89,7 @@ $(document).ready(function(){
             var oldImg = "#w"+questionCount+">img";
             $(oldImg).attr("src","assets/images/zap.png");
 
-            if(incorrectAnswers == 6){
+            if(incorrectAnswers == 5){
                 clearInterval(countSpeed);
                 $("#question").text("Better luck next time, Bond.");
                 $("#answers").empty();
