@@ -60,19 +60,21 @@ $(document).ready(function(){
         // add on click functionality
         $(".correct").on("click", function(){
             correctAnswers++;
-            $(".correct").off();
-            $(".incorrect").off();
+            $("#answers").empty();
 
-            if(correctAnswers == 5){
+            var oldImg = "#w"+questionCount+">img";
+            $(oldImg).attr("src","assets/images/snip.png");
+
+            if(correctAnswers == 6){
                 clearInterval(countSpeed);
                 $("#snip").trigger("play");
-                $("#question").text("CONGRATULATIONS! You disabled the bomb. You've lived to die another day");
+                $("#question").html("CONGRATULATIONS!<br> You disabled the bomb. You've lived to die another day");
                 $("#answers").empty();
-                $("#timer").text("--:--");
+                $("#timer").text("-:--");
                 $("#win").trigger("play"); 
 
             } else{
-                $("#question").text("CORRECT! "+ questions[questionCount].answerText);
+                $("#question").html("CORRECT! <br>"+ questions[questionCount].answerText);
                 setTimeout(postQuestion, 5000);
                 questionCount++;
                 $("#snip").trigger("play");    
@@ -82,18 +84,20 @@ $(document).ready(function(){
 
         $(".incorrect").on("click", function(){
             incorrectAnswers++;
-            $(".correct").off();
-            $(".incorrect").off();
+            $("#answers").empty();
 
-            if(incorrectAnswers == 5){
+            var oldImg = "#w"+questionCount+">img";
+            $(oldImg).attr("src","assets/images/zap.png");
+
+            if(incorrectAnswers == 6){
                 clearInterval(countSpeed);
                 $("#question").text("Better luck next time, Bond.");
                 $("#answers").empty();
-                $("#timer").text("00:00");
+                $("#timer").text("0:00");
                 $("#explode").trigger("play"); 
 
             } else {
-                $("#question").text("WRONG! "+ questions[questionCount].answerText);
+                $("#question").html("WRONG! <br>"+ questions[questionCount].answerText);
                 setTimeout(postQuestion, 5000);
                 questionCount++;
                 speed= speed*3/4;
@@ -116,11 +120,7 @@ $(document).ready(function(){
         }
       
         if (minutes === 0) {
-          minutes = "00";
-        }
-      
-        else if (minutes < 10) {
-          minutes = "0" + minutes;
+          minutes = "0";
         }
       
         return minutes + ":" + seconds;
@@ -135,6 +135,13 @@ $(document).ready(function(){
 
     function countDown(){
         time--;
+        if (time == 0){
+            clearInterval(countSpeed);
+            $("#question").text("Better luck next time, Bond.");
+            $("#answers").empty();
+            $("#timer").text("0:00");
+            $("#explode").trigger("play"); 
+        }
         var convTime = timeConverter(time);
         $("#timer").text(convTime);
         $("#beep").trigger("play");
@@ -145,12 +152,12 @@ $(document).ready(function(){
         questionCount=0;
         correctAnswers=0;
         incorrectAnswers=0;
-        time = 180;
+        time = 120;
         speed = 1;
 
-        $("#timer").html("3:00");
+        $("#timer").html("2:00");
 
-        $("#question").html("You have three minutes to diffuse the bomb above by snipping 5 of 10 wires.<br> Snip wires by correctly answering the following questions. <br> Incorrect answers will cause the bomb's timer to speed up. <br>GOOD LUCK!");
+        $("#question").html("You have two minutes to diffuse the bomb above by snipping 6 of 10 wires.<br> Snip wires by correctly answering the following questions. <br> Incorrect answers will cause the bomb's timer to speed up. <br>GOOD LUCK!");
         
         var startButton = $("<button>");
         startButton.text("START");

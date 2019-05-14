@@ -1,0 +1,84 @@
+@font-face {
+    font-family: 'digital-7';
+    src: url('../fonts/digital-7.ttf');
+}
+
+body {
+    font-family: sans-serif;
+    width: 700px;
+    margin: auto;
+}
+    
+#bomb {
+    background-image: url("../images/bomb.png");
+    width: 700px;
+    height: 327px;
+}
+
+#timer {
+    font-family: 'digital-7';
+    color: greenyellow;
+    font-size: 100px;
+    padding-top: 35px;
+    padding-left: 250px;
+}
+
+.wires{
+    height: 50px;
+    width:20px;
+}
+#wires {
+    margin-left:160px;
+    margin-top: 60px;
+}
+
+#question {
+    font-size: 21px;
+    margin: 40px 0px 0px 0px;
+    line-height: 1.5;
+    width: 700px;
+    text-align: center;
+}
+
+#answers {
+    width: 700px;
+    text-align: center;
+    margin: 20px 0px 0px 0px;
+}
+
+.audios {
+    display: none;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+ul {
+    list-style-type: none;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 0px;
+}
+
+li {
+    padding: 10px;
+    font-size: 18px;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+li:hover {
+    font-weight: bold;
+    background-color: lightgray;
+    font-size: 20px;
+}
+
+button {
+    padding: 10px;
+    font-size: 30px;
+    width: 30%;
+}
+
