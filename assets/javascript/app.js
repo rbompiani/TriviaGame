@@ -59,23 +59,48 @@ $(document).ready(function(){
 
         // add on click functionality
         $(".correct").on("click", function(){
-            $("#question").text("CORRECT! "+ questions[questionCount].answerText);
-            $(".answer").off();
-            setTimeout(postQuestion, 5000);
             correctAnswers++;
-            questionCount++;
-            $("#snip").trigger("play");
+            $(".correct").off();
+            $(".incorrect").off();
+
+            if(correctAnswers == 5){
+                clearInterval(countSpeed);
+                $("#snip").trigger("play");
+                $("#question").text("CONGRATULATIONS! You disabled the bomb. You've lived to die another day");
+                $("#answers").empty();
+                $("#timer").text("--:--");
+                $("#win").trigger("play"); 
+
+            } else{
+                $("#question").text("CORRECT! "+ questions[questionCount].answerText);
+                setTimeout(postQuestion, 5000);
+                questionCount++;
+                $("#snip").trigger("play");    
+            }
+           
         })
 
         $(".incorrect").on("click", function(){
-            $("#question").text("WRONG! "+ questions[questionCount].answerText);
-            $(".answer").off();
-            setTimeout(postQuestion, 5000);
             incorrectAnswers++;
-            questionCount++;
-            speed= speed*3/4;
-            $("#zap").trigger("play");
-            startTime();
+            $(".correct").off();
+            $(".incorrect").off();
+
+            if(incorrectAnswers == 5){
+                clearInterval(countSpeed);
+                $("#question").text("Better luck next time, Bond.");
+                $("#answers").empty();
+                $("#timer").text("00:00");
+                $("#explode").trigger("play"); 
+
+            } else {
+                $("#question").text("WRONG! "+ questions[questionCount].answerText);
+                setTimeout(postQuestion, 5000);
+                questionCount++;
+                speed= speed*3/4;
+                $("#zap").trigger("play");
+                startTime();                
+            }
+
         })
             
     }
